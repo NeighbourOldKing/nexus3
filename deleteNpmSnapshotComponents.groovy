@@ -6,10 +6,7 @@ import org.sonatype.nexus.repository.storage.Component
 def repositoryName = "npm-snapshot"
 def versions = []
 def temp = []
-/**
- * 删除npm-snapshot库中较低版本的npm类型的component和asset数据
- * 只保留npm类型最新的snapshots版本(不对release和其它版本做操作)
- */
+
 repository.repositoryManager.browse().each { Repository repo ->
 	def tx = repo.facet(StorageFacet).txSupplier().get()
 	try {
@@ -35,13 +32,13 @@ repository.repositoryManager.browse().each { Repository repo ->
 					}
 				}
 
-				log.info("----组件名称-----" + temp[i]);
-				log.info("----对应最新开发版本---------" + lastSnapshottVersion);
-				log.info("----需要删除删除的对应版本---------" + needRemoveVersion);
-				log.info("------结束！！！！！--------");
+				log.info("----???????-----" + temp[i]);
+				log.info("----???????????汾---------" + lastSnapshottVersion);
+				log.info("----??????????????汾---------" + needRemoveVersion);
+				log.info("------??????????????--------");
 
 				if(needRemoveVersion.size() > 0 ){
-					log.info("-长度！--" + needRemoveVersion.size() );
+					log.info("-?????--" + needRemoveVersion.size() );
 					for(int k = 0 ; k< needRemoveVersion.size() ; k++){
 						Iterable<Component> needDeleteComponents = tx.findComponents(Query.builder().where(" name = '" +temp[i] + "' and version = '" + needRemoveVersion[k]+ "'").build(), [repo])
 						Iterator it = 	needDeleteComponents.iterator();
